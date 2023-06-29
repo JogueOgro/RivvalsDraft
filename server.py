@@ -5,19 +5,19 @@ app = Flask(__name__)
 app.secret_key = 'rivvals'
 
 jogadores = [
-    {'nome': 'Joaozinho', 'nick': 'Capybara', 'power': 5, 'tags': ['dev', 'ambev']},
-    {'nome': 'Israel', 'nick': 'Zanarkand', 'power': 5, 'tags': ['dev', 'ticket']},
-    {'nome': 'Marcelo Tenório', 'nick': 'Valdoy', 'power': 4, 'tags': ['ppl', 'ambev']},
-    {'nome': 'Ana Marin', 'nick': 'Golpinho', 'power': 3, 'tags': ['dev', 'azul']},
-    {'nome': 'Pamela', 'nick': 'PAM', 'power': 3, 'tags': ['psi']},
-    {'nome': 'Jessé', 'nick': 'Rasta', 'power': 4, 'tags': ['ppl', 'rh']},
-    {'nome': 'Cadu', 'nick': 'CaduSSJ', 'power': 3, 'tags': ['rh', 'ambev']},
-    {'nome': 'André Milanez', 'nick': 'Milanez', 'power': 4, 'tags': ['clvl']},
-    {'nome': 'André Tirich', 'nick': 'Tiriri', 'power': 4, 'tags': ['fin']},
-    {'nome': 'Gustavo Barros', 'nick': 'Gu Barros', 'power': 4, 'tags': ['azul', 'ambev']},
-    {'nome': 'Neto', 'nick': 'Fimose 5cm', 'power': 3, 'tags': ['dev', 'rh']},
-    {'nome': 'Rayane', 'nick': 'SenhoraTPM', 'power': 3, 'tags': ['cln']},
-    {'nome': 'Thales', 'nick': 'Thaleco', 'power': 4, 'tags': ['dev', 'azul']},
+    {'nome': 'Joaozinho', 'nick': 'Capybara', 'power': 5, 'tags': ['dev', 'ambev'], 'wins': ['mj', 'mj']},
+    {'nome': 'Israel', 'nick': 'Zanarkand', 'power': 5, 'tags': ['dev', 'ticket'], 'wins': ['mj2', 'med']},
+    {'nome': 'Marcelo Tenório', 'nick': 'Valdoy', 'power': 4, 'tags': ['ppl', 'ambev'], 'wins': ['mj', 'med']},
+    {'nome': 'Ana Marin', 'nick': 'Golpinho', 'power': 3, 'tags': ['dev', 'azul'], 'wins': []},
+    {'nome': 'Pamela', 'nick': 'PAM', 'power': 3, 'tags': ['psi'], 'wins': []},
+    {'nome': 'Jessé', 'nick': 'Rasta', 'power': 4, 'tags': ['ppl', 'rh'], 'wins': []},
+    {'nome': 'Cadu', 'nick': 'CaduSSJ', 'power': 3, 'tags': ['rh', 'ambev'], 'wins': ['med']},
+    {'nome': 'André Milanez', 'nick': 'Milanez', 'power': 4, 'tags': ['clvl'], 'wins': ['med']},
+    {'nome': 'André Tirich', 'nick': 'Tiriri', 'power': 4, 'tags': ['fin'], 'wins': ['mj']},
+    {'nome': 'Gustavo Barros', 'nick': 'Gu Barros', 'power': 4, 'tags': ['azul', 'ambev'], 'wins': ['mj2']},
+    {'nome': 'Neto', 'nick': 'Fimose 5cm', 'power': 3, 'tags': ['dev', 'rh'], 'wins': []},
+    {'nome': 'Rayane', 'nick': 'SenhoraTPM', 'power': 3, 'tags': ['cln'], 'wins': []},
+    {'nome': 'Thales', 'nick': 'Thaleco', 'power': 4, 'tags': ['dev', 'azul'], 'wins': []},
 ]
 
 rodada = 0

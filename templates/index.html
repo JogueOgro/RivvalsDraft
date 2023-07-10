@@ -27,11 +27,19 @@
         <form action="/process_form" method="post">
           <div class="form-group">
             <label for="times">Nº de Times</label>
-            <input type="text" class="form-control" id="times" name="times" placeholder="Número de Times" value="32">
+            <input type="text" class="form-control" id="times" name="times" placeholder="Número de Times" value="25">
+          </div>
+          <div class="form-group">
+            <label for="times">Players por Times</label>
+            <input type="text" class="form-control" id="p_times" name="p_times" placeholder="Pessoas por Time" value="4">
           </div>
           <div class="form-group">
             <label for="jogo">Jogo</label>
             <input type="text" class="form-control" id="jogo" name="jogo" placeholder="Nome do Jogo" value="Rocket League">
+          </div>
+         <div class="form-group">
+            <label for="cleverbox">Seleção inteligente de capitães</label>
+            <input type="checkbox" checked id="cleverbox" name="cleverbox">
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

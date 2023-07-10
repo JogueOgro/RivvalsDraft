@@ -24,13 +24,13 @@
                         <tr>
                             <td>{{ jogador.nome }}</td>
                             <td>{{ jogador.nick }}</td>
-                            {% if jogador.power == 5 %}
+                            {% if jogador.power >= 5 %}
                             <td><img src="../static/img/5stars.png"/></td>
                             {% endif %}
-                            {% if jogador.power == 4 %}
+                            {% if 4 <= jogador.power < 5 %}
                             <td><img src="../static/img/4stars.png"/></td>
                             {% endif %}
-                            {% if jogador.power == 3 %}
+                            {% if jogador.power < 4 %}
                             <td><img src="../static/img/3stars.png"/></td>
                             {% endif %}
                         </tr>
@@ -60,13 +60,13 @@
                         <tr>
                             <td class="nome">{{ jogador.nome }}</td>
                             <td>{{ jogador.nick }}</td>
-                            {% if jogador.power == 5 %}
+                            {% if jogador.power >= 5 %}
                             <td><img src="../static/img/5stars.png"/></td>
                             {% endif %}
-                            {% if jogador.power == 4 %}
+                            {% if 4 <= jogador.power < 5 %}
                             <td><img src="../static/img/4stars.png"/></td>
                             {% endif %}
-                            {% if jogador.power == 3 %}
+                            {% if jogador.power < 4 %}
                             <td><img src="../static/img/3stars.png"/></td>
                             {% endif %}
 

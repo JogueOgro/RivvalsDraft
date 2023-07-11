@@ -24,7 +24,7 @@ jogadores = [
     {'nome': 'Jessé Oliveira de Freitas', 'nick': 'O CTO', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Glauco Mordente', 'nick': '', 'power': 3, 'tags': [], 'wins': []},
     {'nome': 'Paula Elvira Picchi Mendes', 'nick': 'Paulinha', 'power': 1, 'tags': [], 'wins': []},
-    {'nome': 'Carlos Almeida', 'nick': '', 'power': 3.9, 'tags': [], 'wins': []},
+    {'nome': 'Carlos Almeida', 'nick': '', 'power': 4, 'tags': [], 'wins': []},
     {'nome': 'Douglas Costa', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
     {'nome': 'Glaicon da Silva Reis', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Carlos Eduardo Biaseto', 'nick': 'Cadu', 'power': 1, 'tags': [], 'wins': []},
@@ -44,7 +44,7 @@ jogadores = [
     {'nome': 'Marcelo Pinheiro', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Bruno Gonzalez Rodrigues', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Kelvy Correa Nascimento Chagas', 'nick': '', 'power': 3.5, 'tags': [], 'wins': []},
-    {'nome': 'Cristian Silva Macedo', 'nick': 'Mais Cedo', 'power': 4, 'tags': [], 'wins': []},
+    {'nome': 'Cristian Silva Macedo', 'nick': 'Mais Cedo', 'power': 4.02, 'tags': [], 'wins': []},
     {'nome': 'Rafael dos Santos Cardoso', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Rafael Costa', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
     {'nome': 'Heitor Gandolfi Cardillo', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
@@ -68,7 +68,7 @@ jogadores = [
     {'nome': 'Lívia Genovez Braga', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Alfonso Henrique Haskel', 'nick': 'Tá de Haskel', 'power': 4.5, 'tags': [], 'wins': []},
     {'nome': 'Hiro Augusto Lima Sakuno', 'nick': '', 'power': 5, 'tags': [], 'wins': []},
-    {'nome': 'Thales Silva', 'nick': 'Thaleco', 'power': 4, 'tags': [], 'wins': []},
+    {'nome': 'Thales Silva', 'nick': 'Thaleco', 'power': 4.01, 'tags': [], 'wins': []},
     {'nome': 'Rafael de Oliveira Gomes da Silva', 'nick': '', 'power': 6, 'tags': [], 'wins': []},
     {'nome': 'Natan Amorim', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Kaique Fernandes da Silva', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
@@ -135,6 +135,29 @@ def index():
     return render_template('index.html', titulo='Draft Settings')
 
 
+@app.route('/captains')
+def captains():
+    global rodada
+    times = shelve_file['n_times']
+    for n in range(1, int(times) + 1):
+        time = []
+        time.append(jogadores.pop(int(times)-n))
+        time[0]['nome'] = time[0]['nome'] + ' (c)'
+        shelve_file[str(n)] = time
+        shelve_file['power_'+str(n)] = time[0]['power']
+    rodada = 1
+    return redirect(url_for('draft'))
+
+
+@app.route('/balance')
+def balance():
+    powers = []
+    n_times = shelve_file['n_times']
+    for n in range(1, int(n_times) + 1):
+        powers.append(shelve_file['power_' + str(n)])
+    # shelve_file.close()
+    return render_template('balance.html', titulo='Força do Balanceamento', powers=powers)
+
 @app.route('/process_form', methods=['GET', 'POST'])
 def process_form():
     global jogadores, rodada
@@ -144,20 +167,16 @@ def process_form():
     p_times = request.form['p_times']
     shelve_file['p_times'] = p_times
     jogadores.sort(reverse=True, key=get_power)
-
-    if request.form['cleverbox']:
-        for n in range(1, int(times) + 1):
-            time = []
-            time.append(jogadores.pop(int(times)-n))
-            time[0]['nome'] = time[0]['nome'] + ' (c)'
-            shelve_file[str(n)] = time
-            shelve_file['power_'+str(n)] = time[0]['power']
-        rodada = 1
-    else:
+    capitaes = jogadores[:int(times)]
+    capitaes.sort(key=get_power)
+    try:
+        if request.form['cleverbox']:
+            return render_template('captains.html', titulo='Capitães Rivvals', capitaes=capitaes)
+    except:
         for n in range(1, int(times) + 1):
             shelve_file[str(n)] = []
-            shelve_file['power_'+str(n)] = 0
-    return redirect(url_for('draft'))
+            shelve_file['power_' + str(n)] = 0
+        return redirect(url_for('draft'))
 
 
 @app.route('/process_next', methods=['GET', 'POST'])
@@ -209,12 +228,7 @@ def final():
     for n in range(1, int(shelve_file['n_times']) + 1):
         times.append(shelve_file[str(n)])
     pag_titulo = "Relatório Final"
-    powers = []
-    n_times = shelve_file['n_times']
-    for n in range(1, int(n_times) + 1):
-        powers.append(shelve_file['power_'+str(n)])
-    # shelve_file.close()
-    return render_template('final.html', titulo=pag_titulo, times=times, powers=powers)
+    return render_template('final.html', titulo=pag_titulo, times=times)
 
 
 def filtrar_jogadores(time, jogadores):

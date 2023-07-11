@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Capitães Rivvals</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+  </head>
+  <body>
+    <div class="container">
+        <!--cria container onde as mensagens serão exibidas-->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <!--condição para exibição das mensagens-->
+                <ul id="messages" class="list-unstyled">
+                    <!--laço e repetição para exibição das mensagens-->
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+                <!--fim dos laços-->
+        <div class="page-header">
+            <h1>{{ titulo }}</h1>
+        </div>
+        <div>
+            <form action="/captains">
+              <button type="submit" class="btn btn-primary">Continuar</button>
+            </form>
+            <br/>
+        </div>
+        <table class="table table-striped table-responsive table-bordered" id="time">
+        <thead>
+            <tr>
+                <th style='width: 5%'>#</th>
+                <th style='width: 25%'>Nome</th>
+                <th style='width: 25%'>Nickname</th>
+                <th style='width: 25%'>Power</th>
+                <th style='width: 15%'>Conquistas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--criamos uma estrutura de repetição com o Jinja2 para preencher nossa tabela com os dados-->
+            {% for capitao in capitaes  %}
+
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ capitao.nome }}</td>
+                            <td>{{ capitao.nick }}</td>
+                            {% if capitao.power >= 5 %}
+                            <td><img src="../static/img/5stars.png"/></td>
+                            {% endif %}
+                            {% if 4 <= capitao.power < 5 %}
+                            <td><img src="../static/img/4stars.png"/></td>
+                            {% endif %}
+                            {% if capitao.power < 4 %}
+                            <td><img src="../static/img/3stars.png"/></td>
+                            {% endif %}
+
+                            <td>
+                                {% for win in capitao.wins  %}
+                                    {% if win == 'mj' %}
+                                    <img src="../static/img/trofeu.png" alt='1o lugar Major'/>
+                                    {% endif %}
+                                    {% if win == 'mj2' %}
+                                    <img src="../static/img/trofeuprata.png" alt='1o lugar Major'/>
+                                    {% endif %}
+                                    {% if win == 'med' %}
+                                    <img src="../static/img/medalha.png" alt='1o lugar Major'/>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+        {% endfor %}
+        <!--encerramos a estrutura de repetição-->
+        </tbody>
+    </table>
+    </div>
+  </body>
+</html>

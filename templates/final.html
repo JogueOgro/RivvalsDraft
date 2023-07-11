@@ -58,23 +58,11 @@
                 </tbody>
             </table>
             {% endfor %}
-            <table>
-                <thead>
-                    <tr>
-                        <th style='width: 25%'>Time</th>
-                        <th style='width: 25%'>Power</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for power in powers  %}
-                        <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ power }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <form action="/balance">
+                <button type="submit" class="btn btn-primary">Balanceamento</button>
+            </form>
         </div>
+
     </body>
     <script src="../static/functions.js"></script>
-</html>>
+</html>

@@ -233,7 +233,7 @@ def filtrar_jogadores(time, jogadores):
 
     power = shelve_file['power_' + str(passo)]
     # Se tiver batendo no poder máximo só pode escolher jogador de força 1 por rodada
-    if max_power - float(power) <= 3:
+    if max_power - float(power) <= 4:
         filtrados = [
             jogador for jogador in filtrados
             if jogador['power'] == 1

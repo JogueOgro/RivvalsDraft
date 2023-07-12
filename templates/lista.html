@@ -33,6 +33,20 @@
                             {% if jogador.power < 4 %}
                             <td><img src="../static/img/3stars.png"/></td>
                             {% endif %}
+
+                            <td>
+                                {% for win in jogador.wins  %}
+                                    {% if win == 'mj' %}
+                                    <img src="../static/img/trofeu.png" alt='1o lugar Major'/>
+                                    {% endif %}
+                                    {% if win == 'mj2' %}
+                                    <img src="../static/img/trofeuprata.png" alt='1o lugar Major'/>
+                                    {% endif %}
+                                    {% if win == 'med' %}
+                                    <img src="../static/img/medalha.png" alt='1o lugar Major'/>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
                         </tr>
         {% endfor %}
         <!--encerramos a estrutura de repetição-->

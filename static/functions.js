@@ -20,6 +20,7 @@ var current_team = 1
 var current_group = 1
 var setup = true;
 var listaTimes = [];
+var sorteados = [];
 
 function setUp (totalTimes) {
     for (var i = 1; i <= totalTimes; i++) {
@@ -28,9 +29,9 @@ function setUp (totalTimes) {
     }
 }
 
-function updateLista (time, totalTimes) {
+function updateLista (time) {
     var novaLista = [];
-    for (var i = 1; i <= totalTimes; i++) {
+    for (var i = 1; i <= listaTimes.length; i++) {
         if (i !== time) {
             novaLista.push(i);
         }
@@ -61,25 +62,31 @@ $(document).ready(function() {
         var n_grupos = $('meta#my_data').data('n_grupos');
         var totalTimes = n_grupos*n_times;
 
+        if (current_team > n_times) alert('Sorteio finalizado!');
+        else {
+            sorteado = Math.floor(Math.random() * totalTimes) + 1;
+            while (sorteados.includes(sorteado)) {
+                sorteado = Math.floor(Math.random() * totalTimes) + 1;
+            }
+            sorteados.push(sorteado);
+
+            console.log(sorteado);
+            updateLista(sorteado);
+            console.log(listaTimes);
+            $('td#coords_'+current_group+current_team).html("Time "+sorteado);
+
+            current_group++;
+            if (current_group > n_grupos) {
+                current_group = 1;
+                current_team++;
+            }
+        }
         if (setup == true) {
-            // alert(setup);
             setUp(totalTimes);
             setup = false;
         }
-        // alert(setup);
 
-        sorteado = Math.floor(Math.random() * totalTimes) + 1;
-        console.log(sorteado);
-        updateLista(sorteado, totalTimes);
-        console.log(listaTimes);
-        alert('td#coords_'+current_group+current_team);
-        $('td#coords_'+current_group+current_team).html("Time "+sorteado);
 
-        current_group++;
-        if (current_group > n_grupos) {
-            current_group = 1;
-            current_team++;
-        }
     });
 
 });

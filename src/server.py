@@ -132,7 +132,24 @@ shelve_file['passo'] = passo
 
 @app.route('/')
 def index():
-    return render_template('index.html', titulo='Draft Settings')
+    return render_template('index.html', titulo='Menu')
+
+
+@app.route('/groups_settings')
+def groups_settings():
+    return render_template('groups_settings.html', titulo='Group Draw Settings')
+
+
+@app.route('/process_groups_settings', methods=['GET', 'POST'])
+def process_groups_settings():
+    n_grupos = int(request.form['n_grupos'])
+    n_times = int(request.form['n_times'])
+    return render_template('groups_draw.html', titulo='Group Draw Settings', n_grupos=n_grupos, n_times=n_times)
+
+
+@app.route('/draft_settings')
+def draft_settings():
+    return render_template('draft_settings.html', titulo='Draft Settings')
 
 
 @app.route('/captains')

@@ -16,6 +16,30 @@ var x = setInterval(function() {
   }
 }, 1000);
 
+var current_team = 1
+var current_group = 1
+var setup = true;
+var listaTimes = [];
+
+function setUp (totalTimes) {
+    for (var i = 1; i <= totalTimes; i++) {
+        // console.log(i);
+        listaTimes.push(i);
+    }
+}
+
+function updateLista (time, totalTimes) {
+    var novaLista = [];
+    for (var i = 1; i <= totalTimes; i++) {
+        if (i !== time) {
+            novaLista.push(i);
+        }
+    }
+    listaTimes = novaLista;
+}
+
+
+
 $(document).ready(function() {
 
     $('tbody#tb_escolhas tr').click(function () {
@@ -32,5 +56,30 @@ $(document).ready(function() {
         $('#selected_name').attr('value', '')
     });
 
-    // $('.alert').delay(1000).hide('slow');
+    $('a#draw').click(function () {
+        var n_times = $('meta#my_data').data('n_times');
+        var n_grupos = $('meta#my_data').data('n_grupos');
+        var totalTimes = n_grupos*n_times;
+
+        if (setup == true) {
+            // alert(setup);
+            setUp(totalTimes);
+            setup = false;
+        }
+        // alert(setup);
+
+        sorteado = Math.floor(Math.random() * totalTimes) + 1;
+        console.log(sorteado);
+        updateLista(sorteado, totalTimes);
+        console.log(listaTimes);
+        alert('td#coords_'+current_group+current_team);
+        $('td#coords_'+current_group+current_team).html("Time "+sorteado);
+
+        current_group++;
+        if (current_group > n_grupos) {
+            current_group = 1;
+            current_team++;
+        }
+    });
+
 });

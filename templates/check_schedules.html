@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checar Horários</title>
+    <link rel="stylesheet" href="../static/bootstrap.css">
+    <link rel="stylesheet" href="../static/styles.css">
+  </head>
+  <body>
+    <div class="container">
+        <!--cria container onde as mensagens serão exibidas-->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <!--condição para exibição das mensagens-->
+                <ul id="messages" class="list-unstyled">
+                    <!--laço e repetição para exibição das mensagens-->
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+                <!--fim dos laços-->
+        <div class="page-header">
+            <h1>{{ titulo }}</h1>
+        </div>
+        <form action="/show_results" method="post">
+            <label for="time">Escolha o 1o time:</label>
+            <select id="time" name="time">
+                {% set n_times = n_times | int %}
+                {% for time in range(1, n_times+1) %}
+                    <option value="{{time}}">Time {{time}}</option>
+                {% endfor %}
+            </select>
+                    <label for="time2">Escolha o 2o time:</label>
+            <select id="time2" name="time2">
+                {% set n_times = n_times | int %}
+                {% for time in range(1, n_times+1) %}
+                    <option value="{{time}}">Time {{time}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Checar Horários</button>
+        </form>
+    </div>
+  </body>
+</html>

@@ -7,3 +7,23 @@
 .time {
     height: 40px;
 }
+
+select#time, select#time2 {
+    margin-right: 40px;
+}
+
+td.c0 {
+    background-color: #d0e9c6;
+}
+
+td.c1 {
+    background-color: #faebcc;
+}
+
+td.c2, td.c3, td.c4, td.c5 {
+    background-color: #d9534f;
+}
+
+tr.results {
+    height: 100px;
+}

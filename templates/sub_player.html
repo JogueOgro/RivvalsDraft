@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Substituir Jogador</title>
+    <link rel="stylesheet" href="../static/bootstrap.css">
+    <link rel="stylesheet" href="../static/styles.css">
+  </head>
+  <body>
+    <div class="container">
+        <!--cria container onde as mensagens serão exibidas-->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <!--condição para exibição das mensagens-->
+                <ul id="messages" class="list-unstyled">
+                    <!--laço e repetição para exibição das mensagens-->
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+                <!--fim dos laços-->
+        <div class="page-header">
+            <h1>{{ titulo }}</h1>
+        </div>
+        <form action="/add_and_replace_player" method="post">
+            <input type="hidden" id="t" name="t" value="{{ time }}">
+            <input type="hidden" id="p" name="p" value="{{ player }}">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome">
+            <br/>
+            <label for="nick">Nickname</label>
+            <input type="text" class="form-control" id="nick" name="nick">
+            <br/>
+            <label for="power">Power</label>
+            <input type="text" class="form-control" id="power" name="power" placeholder="3" value="3">
+            <br/>
+            <button type="submit" class="btn btn-primary">Adicionar e Substituir</button>
+        </form>
+    </div>
+  </body>
+</html>

@@ -27,7 +27,7 @@ jogadores = [
     {'nome': 'Renan Santos', 'nick': '', 'power': 4.91, 'tags': [], 'wins': ['mj2']},
     {'nome': 'Artur Lansoni', 'nick': 'Arturzinho', 'power': 4, 'tags': [], 'wins': ['mj', 'med']},
     {'nome': 'Armando Luiz Bretas Neto', 'nick': 'Tretas', 'power': 4, 'tags': [], 'wins': ['mj']},
-    {'nome': 'Rafael Costa', 'nick': 'Rafão', 'power': 4, 'tags': [], 'wins': []},
+    {'nome': 'Rafael Costa', 'nick': 'Rafão', 'power': 4, 'tags': [], 'wins': ['mj']},
     {'nome': 'Bruno Silva Correa', 'nick': '', 'power': 3, 'tags': [], 'wins': []},
     {'nome': 'Cristian Silva Macedo', 'nick': 'Mais Cedo', 'power': 4, 'tags': [], 'wins': []},
     {'nome': 'Stephany Callegari', 'nick': '', 'power': 4, 'tags': [], 'wins': []},
@@ -35,7 +35,7 @@ jogadores = [
     {'nome': 'Antonio Cosmo', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
     {'nome': 'Antonio Mateus', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
     {'nome': 'Caio Vieira Antunes', 'nick': 'Caminhão Driver', 'power': 3, 'tags': [], 'wins': ['mj']},
-    {'nome': 'Douglas Costa', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
+    {'nome': 'Douglas Costa', 'nick': '', 'power': 2, 'tags': [], 'wins': ['mj']},
     {'nome': 'Fabiano Rodrigues Lima', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
     {'nome': 'Gabriel Rodrigues', 'nick': 'Rodriguinho', 'power': 4, 'tags': [], 'wins': ['mj']},
     {'nome': 'Glauco Mordente', 'nick': '', 'power': 3, 'tags': [], 'wins': []},
@@ -313,7 +313,7 @@ def process_form():
 @app.route('/process_next', methods=['GET', 'POST'])
 def process_next():
     global passo, rodada, jogadores
-    sel = request.form['selected_name']
+    sel = t['selected_name']
     if sel == '':
         flash('Selecione um player da lista de escolhas!', 'error')
         return redirect(url_for('draft'))
@@ -368,6 +368,38 @@ def final():
     pag_titulo = "Relatório Final"
     shelve_file.close()
     return render_template('final.html', titulo=pag_titulo, times=times)
+
+@app.route('/edit_draft')
+def edit_draft():
+    times = []
+    shelve_file = shelve.open('rivvals', writeback=True)
+    for n in range(1, int(shelve_file['n_times']) + 1):
+        times.append(shelve_file[str(n)])
+    shelve_file["teams"] = times
+    pag_titulo = "Draft Atual"
+    shelve_file.close()
+    return render_template('edit_draft.html', titulo=pag_titulo, times=times)
+
+@app.route('/sub_player')
+def sub_player():
+    t = request.args.get('t')
+    p = request.args.get('p')
+    pag_titulo = "Substituir Jogador"
+    return render_template('sub_player.html', titulo=pag_titulo, time=t, player=p)
+
+@app.route('/add_and_replace_player', methods=['GET', 'POST'])
+def add_and_replace_player():
+    shelve_file = shelve.open('rivvals', writeback=True)
+    t = request.form.get('t')
+    p = int(request.form.get('p'))
+    novo_player = {'nome': request.form.get('nome'), 'nick': request.form.get('nick'), 'power': float(request.form.get('power')), 'tags': [], 'wins': [], 'team': t}
+    shelve_file[t][p] = novo_player
+    times = []
+    for n in range(1, int(shelve_file['n_times']) + 1):
+        times.append(shelve_file[str(n)])
+    shelve_file.close()
+    pag_titulo = "Draft Atual"
+    return render_template('edit_draft.html', titulo=pag_titulo, times=times)
 
 @app.route('/db_teams')
 def check_db_teams():

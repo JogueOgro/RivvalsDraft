@@ -394,6 +394,7 @@ def add_and_replace_player():
     p = int(request.form.get('p'))
     novo_player = {'nome': request.form.get('nome'), 'nick': request.form.get('nick'), 'power': float(request.form.get('power')), 'tags': [], 'wins': [], 'team': t}
     shelve_file[t][p] = novo_player
+    shelve_file['teams'][int(t)-1][p] = novo_player
     times = []
     for n in range(1, int(shelve_file['n_times']) + 1):
         times.append(shelve_file[str(n)])

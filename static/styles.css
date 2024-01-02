@@ -27,3 +27,7 @@ td.c2, td.c3, td.c4, td.c5 {
 tr.results {
     height: 100px;
 }
+
+div.back {
+    padding-bottom: 20px;
+}

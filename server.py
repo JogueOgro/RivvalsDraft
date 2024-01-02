@@ -353,6 +353,7 @@ def draft():
     time = shelve_file[str(passo)]
     shelve_file.close()
     pag_titulo = jogo + ' Rivvals Draft - ' + n_times + ' Equipes'
+    #
     jogadores_filtrados = filtrar_jogadores(time, jogadores)
     return render_template('lista.html', titulo=pag_titulo, jogadores=jogadores_filtrados[:10], settings=settings, time=time,
                            rodada=rodada, passo=passo)

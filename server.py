@@ -442,7 +442,7 @@ def filtrar_jogadores(time, jogadores):
     #shelve_file.close()
 
     # Se a rodada for par, ofereca os jogadores com menos power
-    if rodada % 2 == 1:
+    if rodada % 2 == 0:
         filtrados = filtrados[:10]
     else:
         filtrados = filtrados[-10:]

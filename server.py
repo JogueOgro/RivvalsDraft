@@ -44,7 +44,7 @@ jogadores = [
     {'nome': 'Ygor Borges', 'nick': 'Capybara', 'power': 5, 'tags': [], 'wins': ['mj', 'mj']},
     {'nome': 'Gustavo Barros', 'nick': 'Gu Barros', 'power': 2, 'tags': [], 'wins': ['mj2']},
     {'nome': 'Beatriz Costa de Cerqueira', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
-    {'nome': 'Breno Maran', 'nick': 'Baby Shark/Maranhão', 'power': 4, 'tags': [], 'wins': []},
+    {'nome': 'Breno Maran', 'nick': 'Baby Shark/Maranhão', 'power': 4, 'tags': [], 'wins': ['mj', 'med']},
     {'nome': 'Jose Ferraiol Neto', 'nick': 'Neto', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Rodrigo Urbano', 'nick': '', 'power': 1, 'tags': [], 'wins': []},
     {'nome': 'Caio Aparecido Rodrigues do Prado', 'nick': '', 'power': 1, 'tags': [], 'wins': []},

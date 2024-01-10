@@ -14,7 +14,7 @@ jogadores = [
     {'nome': 'Bruce Pedro Gomes', 'nick': '', 'power': 5.8, 'tags': [], 'wins': []},
     {'nome': 'Nathan de Freitas Duarte', 'nick': '', 'power': 2, 'tags': [], 'wins': ['mj']},
     {'nome': 'Marcos Costa', 'nick': 'Costinha', 'power': 5.7, 'tags': [], 'wins': ['mj']},
-    {'nome': 'Andre Dionisio', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
+    {'nome': 'Andre Dionisio', 'nick': '', 'power': 5, 'tags': [], 'wins': []},
     {'nome': 'Giuliano de Carvalho Florestano', 'nick': '', 'power': 2, 'tags': [], 'wins': []},
     {'nome': 'João Felipe de Lima', 'nick': '', 'power': 5.6, 'tags': [], 'wins': []},
     {'nome': 'Thales Silva', 'nick': 'Thaleco', 'power': 5.5, 'tags': [], 'wins': []},
@@ -155,8 +155,6 @@ jogadores = [
 
 rodada = 0
 passo = 1
-max_power = 12
-
 
 @app.route('/')
 def index():
@@ -313,7 +311,7 @@ def process_form():
 @app.route('/process_next', methods=['GET', 'POST'])
 def process_next():
     global passo, rodada, jogadores
-    sel = t['selected_name']
+    sel = request.form['selected_name']
     if sel == '':
         flash('Selecione um player da lista de escolhas!', 'error')
         return redirect(url_for('draft'))
@@ -353,9 +351,8 @@ def draft():
     time = shelve_file[str(passo)]
     shelve_file.close()
     pag_titulo = jogo + ' Rivvals Draft - ' + n_times + ' Equipes'
-    #
     jogadores_filtrados = filtrar_jogadores(time, jogadores)
-    return render_template('lista.html', titulo=pag_titulo, jogadores=jogadores_filtrados[:10], settings=settings, time=time,
+    return render_template('lista.html', titulo=pag_titulo, jogadores=jogadores_filtrados, settings=settings, time=time,
                            rodada=rodada, passo=passo)
 
 
@@ -422,7 +419,7 @@ def db_dump():
 
 
 def filtrar_jogadores(time, jogadores):
-    global rodada, passo, max_power
+    global rodada, passo
     if time == []:
         return jogadores
     avoid_tags = []
@@ -434,15 +431,22 @@ def filtrar_jogadores(time, jogadores):
     for player in jogadores:
         if any(item in player['tags'] for item in avoid_tags) == False:
             filtrados.append(player)
-    shelve_file = shelve.open('rivvals', writeback=True)
-    power = shelve_file['power_' + str(passo)]
+    #shelve_file = shelve.open('rivvals', writeback=True)
+    #power = shelve_file['power_' + str(passo)]
     # Se tiver batendo no poder máximo só pode escolher jogador de força 1 por rodada
-    if max_power - float(power) <= 4:
-        filtrados = [
-            jogador for jogador in filtrados
-            if jogador['power'] == 1
-        ]
-    shelve_file.close()
+    #if max_power - float(power) <= 4:
+    #    filtrados = [
+    #        jogador for jogador in filtrados
+    #        if jogador['power'] == 1
+    #    ]
+    #shelve_file.close()
+
+    # Se a rodada for par, ofereca os jogadores com menos power
+    if rodada % 2 == 1:
+        filtrados = filtrados[:10]
+    else:
+        filtrados = filtrados[-10:]
+
     if filtrados == []:
         return jogadores
     else:
